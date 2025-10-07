@@ -30,11 +30,20 @@
 
       <div class="buttons">
         <button id="tryBtn">Probar</button>
-        <button id="paramsBtn">Parametros listo</button>
       </div>
       <p id="saveStatus" class="note">Nota: La síntesis de voz usa la API Web Speech (SpeechSynthesis). Prueba en Chrome o Edge para mejores resultados.</p>
+
+      <div class="actions-center">
+        <button id="listoBtn" class="btn-listo">Listo</button>
+      </div>
     </main>
 
     <script src="app.js"></script>
+    <script>
+      document.getElementById('listoBtn').addEventListener('click', ()=>{
+        // Navega al módulo de transcripción
+        window.location.href = 'transcribe.html';
+      });
+    </script>
   </body>
 </html>

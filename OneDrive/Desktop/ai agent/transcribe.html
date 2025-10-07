@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transcribir - IA Personal Asistente</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Transcribiendo</h1>
+      <p id="permissionStatus">Solicitando permiso para el micrófono...</p>
+
+      <section id="transcribeArea" aria-live="polite">
+        <div class="transcribe-box">
+          <h2>Transcribiendo</h2>
+          <div id="liveText" class="transcribe-text">—</div>
+          <div style="margin-top:12px; text-align:right;">
+            <button id="stopBtn">Detener</button>
+          </div>
+        </div>
+      </section>
+
+    <script src="transcribe.js"></script>
+  </body>
+  </html>

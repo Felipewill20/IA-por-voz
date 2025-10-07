@@ -18,3 +18,21 @@ button{flex:1;padding:10px 14px;border-radius:8px;border:0;background:var(--acce
 button#paramsBtn{background:#10a37f}
 button:active{transform:translateY(1px)}
 .note{margin-top:12px;font-size:0.9rem;color:#555}
+
+/* Voice control panel */
+/* (Se quitaron estilos del control de voz y de la barra de transcripción) */
+
+.actions-center{display:flex;justify-content:center;margin-top:18px}
+.btn-listo{background:#2563eb;padding:10px 20px;border-radius:10px;color:white;border:0;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(37,99,235,0.18)}
+.btn-listo:active{transform:translateY(1px)}
+
+.transcribe-box{background:#fff;border:1px solid #e6eefb;padding:14px;border-radius:8px}
+.transcribe-text{min-height:80px;padding:10px;background:#f7fbff;border-radius:6px;border:1px solid #e1efff}
+
+/* Responsive */
+@media (max-width:520px){
+  .container{margin:12px;padding:14px}
+  h1{font-size:1.2rem}
+  .buttons{flex-direction:column}
+  button{width:100%}
+}

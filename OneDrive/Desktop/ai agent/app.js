@@ -6,7 +6,6 @@ const pitchEl = document.getElementById('pitch');
 const rateValue = document.getElementById('rateValue');
 const pitchValue = document.getElementById('pitchValue');
 const tryBtn = document.getElementById('tryBtn');
-const paramsBtn = document.getElementById('paramsBtn');
 
 let voices = [];
 const STORAGE_KEY = 'ia_assistente_config_v1';
@@ -135,16 +134,65 @@ tryBtn.addEventListener('click', ()=>{
   speak(phrase);
 });
 
-paramsBtn.addEventListener('click', ()=>{
-  const params = new URLSearchParams({
-    activation: activationEl.value || '',
-    voiceType: voiceTypeEl.value,
-    rate: rateEl.value,
-    pitch: pitchEl.value
-  }).toString();
-  // Abrir nueva ventana con los parámetros
-  window.open(`params.html?${params}`,'_blank','width=420,height=360');
-});
+// No hay botón "Parametros listo" — la configuración se guarda cuando se cambian los controles
 
 // Guardar también al salir de la página (por si no se hicieron cambios explícitos)
 window.addEventListener('beforeunload', saveConfig);
+
+// ------------------ Control de voz (speech recognition) ------------------
+const transcriptEl = document.getElementById('transcript');
+const voiceControlSection = document.getElementById('voiceControl');
+const vcStopBtn = document.getElementById('vcStop');
+
+let recognition;
+let recognizing = false;
+
+function supportsSpeechRecognition(){
+  return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+}
+
+function showVoiceControl(){
+  const status = document.getElementById('saveStatus');
+  if (status) status.textContent = 'Configuración guardada. Control de voz activo.';
+  if (!supportsSpeechRecognition()){
+    transcriptEl.textContent = 'Reconocimiento de voz no soportado en este navegador.';
+    voiceControlSection.setAttribute('aria-hidden','false');
+    voiceControlSection.style.display = 'block';
+    return;
+  }
+
+  // Inicializar reconocimiento si no existe
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = recognition || new SR();
+  recognition.lang = 'es-ES';
+  recognition.interimResults = true;
+  recognition.continuous = true;
+
+  recognition.onstart = ()=>{ recognizing = true; voiceControlSection.setAttribute('aria-hidden','false'); voiceControlSection.style.display='block'; transcriptEl.textContent = 'Escuchando...'; };
+  recognition.onend = ()=>{ recognizing = false; transcriptEl.textContent = 'Control detenido.' };
+  recognition.onerror = (e)=>{ transcriptEl.textContent = 'Error de reconocimiento: '+(e.error||e.message); };
+
+  recognition.onresult = (event)=>{
+    let interim = '';
+    let final = '';
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      const res = event.results[i];
+      if (res.isFinal) final += res[0].transcript + ' ';
+      else interim += res[0].transcript;
+    }
+    transcriptEl.textContent = (final + interim).trim() || 'Escuchando...';
+  };
+
+  try{
+    recognition.start();
+  }catch(e){ /* ignore already started */ }
+}
+
+vcStopBtn.addEventListener('click', ()=>{
+  if (recognition && recognizing) recognition.stop();
+  voiceControlSection.setAttribute('aria-hidden','true');
+  voiceControlSection.style.display='none';
+  const status = document.getElementById('saveStatus');
+  if (status) status.textContent = 'Control de voz detenido.';
+});
+
