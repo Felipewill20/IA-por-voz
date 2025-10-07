@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IA Personal Asistente</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>IA Personal Asistente</h1>
+
+      <label for="activation">Palabra de activacion</label>
+      <input id="activation" type="text" placeholder="Ej. Aurora" />
+
+      <label for="voiceType">Tipo de voz</label>
+      <select id="voiceType">
+        <option value="any">Aleatoria</option>
+        <option value="female">Femenina</option>
+        <option value="male">Masculina</option>
+      </select>
+
+      <div class="sliders">
+        <label for="rate">Velocidad: <span id="rateValue">1</span></label>
+        <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1" />
+
+        <label for="pitch">Frecuencia: <span id="pitchValue">1</span></label>
+        <input id="pitch" type="range" min="0" max="2" step="0.1" value="1" />
+      </div>
+
+      <div class="buttons">
+        <button id="tryBtn">Probar</button>
+        <button id="paramsBtn">Parametros listo</button>
+      </div>
+      <p id="saveStatus" class="note">Nota: La síntesis de voz usa la API Web Speech (SpeechSynthesis). Prueba en Chrome o Edge para mejores resultados.</p>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

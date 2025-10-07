@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Parametros - IA Personal Asistente</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Parámetros seleccionados</h1>
+      <div id="content"></div>
+      <div style="margin-top:16px; text-align:right;">
+        <button id="closeBtn">Cerrar</button>
+      </div>
+    </main>
+    <script>
+      function qs() {
+        return Object.fromEntries(new URLSearchParams(location.search));
+      }
+      const data = qs();
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <p><strong>Palabra de activación:</strong> ${data.activation || '—'}</p>
+        <p><strong>Tipo de voz:</strong> ${data.voiceType || '—'}</p>
+        <p><strong>Velocidad:</strong> ${data.rate || '1'}</p>
+        <p><strong>Frecuencia:</strong> ${data.pitch || '1'}</p>
+      `;
+      document.getElementById('closeBtn').addEventListener('click', ()=> window.close());
+    </script>
+  </body>
+</html>
